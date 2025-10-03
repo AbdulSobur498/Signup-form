@@ -1,18 +1,23 @@
 "use client"
 import Info from "../Signup/page";
-import { FormEvent, FormEventHandler, useState} from "react";
+import { FormEvent, FormEventHandler, useState, useEffect} from "react";
 import Link from "next/link";
 
 
 export default function Login() {
 const[firstname, setFirstname] = useState<string>("");
 const[password, setPassword] = useState<any>("");
-const storedInfo = JSON.parse(localStorage.getItem("info") || "{}");
-const handleValidation = (e: FormEvent) => {
+const[storedinfo, setStoredinfo] = useState({});
+
+useEffect(() => {
+  setStoredinfo(JSON.parse(localStorage.getItem("info") || "{}"));
+}, [])
+
+ let handleValidation = (e: FormEvent) => {
         e.preventDefault();
-        if(password === storedInfo.password) {
+        if(password === storedinfo.password) {
           alert("successful");
-        } else if (password !== storedInfo.password) {
+        } else if (password !== storedinfo.password) {
           alert("Invalid Password");
         }
       }

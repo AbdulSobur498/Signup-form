@@ -22,13 +22,15 @@ export default function Info() {
             alert("Boss, put in a last name!");
             return;
         }
-        localStorage.setItem("info", JSON.stringify({
+        if (typeof window !== "undefined") {
+            localStorage.setItem("info", JSON.stringify({
             firstname,
             lastname,
             age,
             email,
             password,
         }))
+        }
         
     }
 
