@@ -7,16 +7,23 @@ import Link from "next/link";
 export default function Login() {
 const[firstname, setFirstname] = useState<string>("");
 const[password, setPassword] = useState<any>("");
-const[storedinfo, setStoredinfo] = useState({});
+const[storedinfo, setStoredinfo] = useState<{ password?: string}>({});
 
 useEffect(() => {
-  setStoredinfo(JSON.parse(localStorage.getItem("info") || "{}"));
+  const savedInfo = localStorage.getItem("info");
+  if (savedInfo) {
+    setStoredinfo(JSON.parse(savedInfo));
+  }
 }, [])
 
- let handleValidation = (e: FormEvent) => {
+ const handleValidation = (e: FormEvent) => {
         e.preventDefault();
+        if (!storedinfo.password) {
+          alert("No account found. Please signup first!");
+          return;
+        }
         if(password === storedinfo.password) {
-          alert("successful");
+          alert("successful logIn");
         } else if (password !== storedinfo.password) {
           alert("Invalid Password");
         }
